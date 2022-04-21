@@ -1,66 +1,74 @@
-<div id="Page">
-  <ngx-graph
-    class="chart-container"
-    [view]="[1000, 400]"
-    [links]="branches"
-    [nodes]="nodes"
-    (select)="onNodeSelect($event)"
-  >
-    <ng-template #defsTemplate>
-      <svg:marker
-        id="arrow"
-        viewBox="0 -5 10 10"
-        refX="8"
-        refY="0"
-        markerWidth="4"
-        markerHeight="4"
-        orient="auto"
-      >
-        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
-      </svg:marker>
-    </ng-template>
 
-    <ng-template #linkTemplate let-link>
-      <svg:g class="edge">
-        <svg:path
-          class="line"
-          stroke-width="2"
-          marker-end="url(#arrow)"
-        ></svg:path>
-        <svg:text class="edge-label" text-anchor="middle">
-          <textPath
-            class="text-path"
-            [attr.href]="'#' + link.id"
-            [style.dominant-baseline]="link.dominantBaseline"
-            startOffset="50%"
-          >
-            {{ link.label }}
-          </textPath>
-        </svg:text>
-      </svg:g>
-    </ng-template>
-
-    <ng-template #nodeTemplate let-node>
-      <svg:g class="node">
-        <svg:circle [attr.r]="10" fill="#74b9ff" />
-        <svg:circle [attr.r]="10" fill="#ff7675" *ngIf="node.id == selectedNodeId"/>
-        <svg:text alignment-baseline="central" [attr.x]="-5" [attr.y]="5">
-          {{ node.label }}
-        </svg:text>
-      </svg:g>
-    </ng-template>
-  </ngx-graph>
+<div *ngIf = 'resultPage == false'>
+  <div id="graph">
+    <ngx-graph
+      class="chart-container"
+      [view]="[1510, 600]"
+      [links]="branches"
+      [nodes]="nodes"
+      (select)="onNodeSelect($event)"
+    >
+      <ng-template #defsTemplate>
+        <svg:marker
+          id="arrow"
+          viewBox="0 -5 10 10"
+          refX="8"
+          refY="0"
+          markerWidth="4"
+          markerHeight="4"
+          orient="auto"
+        >
+          <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+        </svg:marker>
+      </ng-template>
+  
+      <ng-template #linkTemplate let-link>
+        <svg:g class="edge">
+          <svg:path
+            class="line"
+            stroke-width="2"
+            marker-end="url(#arrow)"
+          ></svg:path>
+          <svg:text class="edge-label" text-anchor="middle">
+            <textPath
+              class="text-path"
+              [attr.href]="'#' + link.id"
+              [style.dominant-baseline]="link.dominantBaseline"
+              startOffset="50%"
+            >
+              {{ link.label }}
+            </textPath>
+          </svg:text>
+        </svg:g>
+      </ng-template>
+  
+      <ng-template #nodeTemplate let-node>
+        <svg:g class="node">
+          <svg:circle [attr.r]="10" fill="#74b9ff" />
+          <svg:circle [attr.r]="10" fill="#ff7675" *ngIf="node.id == selectedNodeId"/>
+          <svg:text alignment-baseline="central" [attr.x]="-5" [attr.y]="5">
+            {{ node.label }}
+          </svg:text>
+        </svg:g>
+      </ng-template>
+    </ngx-graph>
+  </div>
+  
+  <!-- <form>
+    <input type="number" />
+  </form> -->
+  
+  <button (click)="addNode()">Add Node</button>
+  <br>
+  <h3 *ngIf="addingBranchIsActive">
+      Adding branch active!<br>
+      Select the first node by clicking on it on the graph and then the target node
+  </h3>
+  <button (click)="addBranch()">Add branch</button>
+  <!-- <h2 *ngIf="selectedNode != null">Selected node: {{selectedNode.id}}</h2> -->
+  <button (click)="getResult()">Calculate Transfer Function</button>
 </div>
 
-<!-- <form>
-  <input type="number" />
-</form> -->
-
-<button (click)="addNode()">Add Node</button>
-<br>
-<h3 *ngIf="addingBranchIsActive">
-    Adding branch active!<br>
-    Select the first node by clicking on it on the graph and then the target node
-</h3>
-<button (click)="addBranch()">Add branch</button>
-<!-- <h2 *ngIf="selectedNode != null">Selected node: {{selectedNode.id}}</h2> -->
+<div *ngIf = 'resultPage == true'>
+  <app-result></app-result>
+</div>

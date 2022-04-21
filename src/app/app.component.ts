@@ -6,6 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+
+  resultPage = false;
+
   branches = [];
   nodes = [];
 
@@ -49,5 +52,9 @@ export class AppComponent {
         this.selectedNodeId = node.id;
       }
     }
+  }
+
+  getResult(){
+      this.resultPage = true;
   }
 }
