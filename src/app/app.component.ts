@@ -13,11 +13,12 @@ export class AppComponent {
   branches = [];
   nodes = [];
 
-  zoomToFit$: Subject<boolean> = new Subject();
-
   addingBranchIsActive: boolean = false;
   gain: number = null;
   selectedNodeId = null;
+
+  // this is used only to adjust the graph fitment
+  zoomToFit$: Subject<boolean> = new Subject();
 
   addNode() {
     const n = this.nodes.length + 1;
@@ -26,16 +27,13 @@ export class AppComponent {
       label: `${n}`,
     });
     this.nodes = [...this.nodes];
+    // adjust graph zoom to fit all nodes after adding the new one
     this.zoomToFit$.next(true)
-    console.log(this.nodes);
   }
 
   addBranch() {
-    // toggle
-    if (this.gain == null) alert('Enter gain first');
-    else{
+      // toggle
       this.addingBranchIsActive = !this.addingBranchIsActive;
-    }
   }
 
   branchBtnDisabled() : boolean {
@@ -46,10 +44,7 @@ export class AppComponent {
 
   onNodeSelect(node) {
     if (this.addingBranchIsActive) {
-      // console.log('Node selected: ', nodeSelected);
-      // console.log('Branch from', this.addingBranch.from);
-      console.log('Branches', this.branches);
-
+      // check if the source node (from node) was selected
       if (this.selectedNodeId) {
         // add new branch into the graph
         this.branches.push({
