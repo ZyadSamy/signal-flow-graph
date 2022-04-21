@@ -4,6 +4,7 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ResultComponent } from './result/result.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { ResultComponent } from './result/result.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     NgxGraphModule
   ],
   providers: [],

@@ -1,11 +1,12 @@
-
 <div *ngIf = 'resultPage == false'>
   <div id="graph">
     <ngx-graph
       class="chart-container"
-      [view]="[1510, 600]"
       [links]="branches"
       [nodes]="nodes"
+      [draggingEnabled]="false"
+      autoCenter="true"
+      [zoomToFit$]="zoomToFit$"
       (select)="onNodeSelect($event)"
     >
       <ng-template #defsTemplate>
@@ -44,9 +45,25 @@
   
       <ng-template #nodeTemplate let-node>
         <svg:g class="node">
-          <svg:circle [attr.r]="10" fill="#74b9ff" />
-          <svg:circle [attr.r]="10" fill="#ff7675" *ngIf="node.id == selectedNodeId"/>
-          <svg:text alignment-baseline="central" [attr.x]="-5" [attr.y]="5">
+          <svg:circle
+            [attr.r]="node.dimension.width / 2"
+            [attr.cx]="node.dimension.width / 2"
+            [attr.cy]="node.dimension.height / 2"
+            fill="#74b9ff"
+          />
+          <!-- selection overlay -->
+          <svg:circle
+            *ngIf="node.id == selectedNodeId"
+            [attr.r]="node.dimension.width / 2"
+            [attr.cx]="node.dimension.width / 2"
+            [attr.cy]="node.dimension.height / 2"
+            fill="#ff7675"
+          />
+          <svg:text
+            alignment-baseline="central"
+            [attr.x]="10"
+            [attr.y]="node.dimension.height / 2"
+          >
             {{ node.label }}
           </svg:text>
         </svg:g>
@@ -54,20 +71,32 @@
     </ngx-graph>
   </div>
   
-  <!-- <form>
-    <input type="number" />
-  </form> -->
-  
   <button (click)="addNode()">Add Node</button>
-  <br>
-  <h3 *ngIf="addingBranchIsActive">
-      Adding branch active!<br>
-      Select the first node by clicking on it on the graph and then the target node
-  </h3>
-  <button (click)="addBranch()">Add branch</button>
-  <!-- <h2 *ngIf="selectedNode != null">Selected node: {{selectedNode.id}}</h2> -->
+  <br />
+  
+  <div id="branch">
+    <h1>Add branch</h1>
+  
+    <label>Gain:</label>
+    <input type="number" [(ngModel)]="gain" />
+  
+    <button (click)="addBranch()" [disabled]="branchBtnDisabled()">
+      Select branch nodes
+    </button>
+  
+    <div *ngIf="addingBranchIsActive">
+      <div *ngIf="selectedNodeId == null; else selectSecond">
+        Select the first node by clicking on it on the graph
+      </div>
+      <ng-template #selectSecond> Select the target node </ng-template>
+    </div>
+  </div>
+  
+  <br />
+  <button (click)="clearGraph()">Clear graph</button>
   <button (click)="getResult()">Calculate Transfer Function</button>
 </div>
+
 
 <div *ngIf = 'resultPage == true'>
   <app-result></app-result>
