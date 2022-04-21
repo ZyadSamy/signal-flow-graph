@@ -1,0 +1,34 @@
+<div id = 'page'> 
+    <h1 id = 'heading'>Your Result</h1>
+    <div>
+        <table id="forwardPaths">
+            <caption>Forward Paths</caption>
+            <tr>
+                <td>Path</td>
+                <td>Gain</td>
+                <td>Delta</td>
+            </tr>
+            <tr *ngFor = 'let x of forwardPaths'>
+                <td>{{x.path}}</td>
+                <td>{{x.gain}}</td>
+                <td>{{x.delta}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <table *ngFor = 'let x of loops'>
+            <caption>{{loops.indexOf(x) + 1}} non-touching Loops</caption>
+            <tr>
+                <td>Paths</td>
+                <td>Gain</td>
+            </tr>
+            <tr *ngFor = 'let y of x'>
+                <td>{{y.paths}}</td>
+                <td>{{y.gain}}</td>
+            </tr>
+        </table>
+    </div>
+    
+</div>
+

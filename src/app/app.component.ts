@@ -1,27 +1,78 @@
-import { Component, OnInit } from '@angular/core';
-import * as Dracula from 'graphdracula';
+import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit{
-  ngOnInit(): void {
+export class AppComponent {
 
-    // intial template to make sure the library works
+  resultPage = false;
 
-    var Graph = Dracula.Graph
-    var Renderer = Dracula.Renderer.Raphael
-    var Layout = Dracula.Layout.Spring
+  branches = [];
+  nodes = [];
 
-    var graph = new Graph()
+  addingBranchIsActive: boolean = false;
+  gain: number = null;
+  selectedNodeId = null;
 
-    graph.addEdge('Node1', 'Node2', { label: 'G1', directed: true, stroke: '#c9c9c9'});
-    graph.addEdge('Node2', 'Node3', { label: 'G2', directed: true, stroke: '#c9c9c9'});
+  // this is used only to adjust the graph fitment
+  zoomToFit$: Subject<boolean> = new Subject();
 
-    var layout = new Layout(graph)
-    var renderer = new Renderer('#paper', graph, 400, 150)
-    renderer.draw()
+  addNode() {
+    const n = this.nodes.length + 1;
+    this.nodes.push({
+      id: `${n}`,
+      label: `${n}`,
+    });
+    this.nodes = [...this.nodes];
+    // adjust graph zoom to fit all nodes after adding the new one
+    this.zoomToFit$.next(true)
+  }
+
+  addBranch() {
+      // toggle
+      this.addingBranchIsActive = !this.addingBranchIsActive;
+  }
+
+  branchBtnDisabled() : boolean {
+    // this is used to evalue if the add branch button should be disabled or not
+    // possible bug where the user could press the button and then remove the gain
+    return this.gain == null
+  }
+
+  onNodeSelect(node) {
+    if (this.addingBranchIsActive) {
+      // check if the source node (from node) was selected
+      if (this.selectedNodeId) {
+        // add new branch into the graph
+        this.branches.push({
+          id: `B${this.branches.length}`,
+          source: this.selectedNodeId,
+          label: this.gain,
+          target: node.id,
+        });
+        // this is needed to trigger the graph update
+        this.branches = [...this.branches];
+        // reset
+        this.addingBranchIsActive = false;
+        this.selectedNodeId = null;
+      } else {
+        this.selectedNodeId = node.id;
+      }
+    }
+  }
+
+  getResult(){
+      this.resultPage = true;
+  }
+  
+  clearGraph() {
+    this.nodes = [];
+    this.branches = [];
+    // reset this just in case
+    this.addingBranchIsActive = false;
+    this.selectedNodeId = null;
   }
 }
