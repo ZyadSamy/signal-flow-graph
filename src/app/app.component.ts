@@ -3,22 +3,51 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'signal-flow-graph';
+  branches = [];
+  nodes = [];
 
-  Edges = [
-    
-  ]
+  addingBranchIsActive: boolean = false;
+  selectedNodeId = null;
 
-  Nodes = [
-    
-  ]
+  addNode() {
+    const n = this.nodes.length + 1;
+    this.nodes.push({
+      id: `${n}`,
+      label: `${n}`,
+    });
+    this.nodes = [...this.nodes];
+    console.log(this.nodes);
+  }
 
-  addNode(){
-    this.Nodes.push({id: (this.Nodes.length + 1).toString(), label:(this.Nodes.length + 1).toString()});
-    this.Nodes = [...this.Nodes];
-    console.log(this.Nodes);
+  addBranch() {
+    // toggle
+    this.addingBranchIsActive = !this.addingBranchIsActive;
+  }
+
+  onNodeSelect(node) {
+    if (this.addingBranchIsActive) {
+      // console.log('Node selected: ', nodeSelected);
+      // console.log('Branch from', this.addingBranch.from);
+      console.log('Branches', this.branches);
+
+      if (this.selectedNodeId) {
+        // add new branch into the graph
+        this.branches.push({
+          id: `B${this.branches.length}`,
+          source: this.selectedNodeId,
+          target: node.id,
+        });
+        // this is needed to trigger the graph update
+        this.branches = [...this.branches];
+        // reset
+        this.addingBranchIsActive = false;
+        this.selectedNodeId = null;
+      } else {
+        this.selectedNodeId = node.id;
+      }
+    }
   }
 }
