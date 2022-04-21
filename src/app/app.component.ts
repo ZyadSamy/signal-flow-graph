@@ -42,7 +42,7 @@ export class AppComponent {
     return this.gain == null
   }
 
-  onNodeSelect(node) {
+  onNodeClick(node) {
     if (this.addingBranchIsActive) {
       // check if the source node (from node) was selected
       if (this.selectedNodeId) {

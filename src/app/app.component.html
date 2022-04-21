@@ -1,89 +1,26 @@
-<div *ngIf = 'resultPage == false'>
-  <div id="graph">
-    <ngx-graph
-      class="chart-container"
-      [links]="branches"
-      [nodes]="nodes"
-      [draggingEnabled]="false"
-      autoCenter="true"
-      [zoomToFit$]="zoomToFit$"
-      (select)="onNodeSelect($event)"
-    >
-      <ng-template #defsTemplate>
-        <svg:marker
-          id="arrow"
-          viewBox="0 -5 10 10"
-          refX="8"
-          refY="0"
-          markerWidth="4"
-          markerHeight="4"
-          orient="auto"
-        >
-          <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
-        </svg:marker>
-      </ng-template>
+<div *ngIf="resultPage == false; else result">
   
-      <ng-template #linkTemplate let-link>
-        <svg:g class="edge">
-          <svg:path
-            class="line"
-            stroke-width="2"
-            marker-end="url(#arrow)"
-          ></svg:path>
-          <svg:text class="edge-label" text-anchor="middle">
-            <textPath
-              class="text-path"
-              [attr.href]="'#' + link.id"
-              [style.dominant-baseline]="link.dominantBaseline"
-              startOffset="50%"
-            >
-              {{ link.label }}
-            </textPath>
-          </svg:text>
-        </svg:g>
-      </ng-template>
-  
-      <ng-template #nodeTemplate let-node>
-        <svg:g class="node">
-          <svg:circle
-            [attr.r]="node.dimension.width / 2"
-            [attr.cx]="node.dimension.width / 2"
-            [attr.cy]="node.dimension.height / 2"
-            fill="#74b9ff"
-          />
-          <!-- selection overlay -->
-          <svg:circle
-            *ngIf="node.id == selectedNodeId"
-            [attr.r]="node.dimension.width / 2"
-            [attr.cx]="node.dimension.width / 2"
-            [attr.cy]="node.dimension.height / 2"
-            fill="#ff7675"
-          />
-          <svg:text
-            alignment-baseline="central"
-            [attr.x]="10"
-            [attr.y]="node.dimension.height / 2"
-          >
-            {{ node.label }}
-          </svg:text>
-        </svg:g>
-      </ng-template>
-    </ngx-graph>
-  </div>
-  
+  <app-graph
+    [branches]="branches"
+    [nodes]="nodes"
+    [zoomToFit$]="zoomToFit$"
+    [selectedNodeId]="selectedNodeId"
+    (onNodeClick)="onNodeClick($event)"
+  ></app-graph>
+
   <button (click)="addNode()">Add Node</button>
   <br />
-  
+
   <div id="branch">
     <h1>Add branch</h1>
-  
+
     <label>Gain:</label>
     <input type="number" [(ngModel)]="gain" />
-  
+
     <button (click)="addBranch()" [disabled]="branchBtnDisabled()">
       Select branch nodes
     </button>
-  
+
     <div *ngIf="addingBranchIsActive">
       <div *ngIf="selectedNodeId == null; else selectSecond">
         Select the first node by clicking on it on the graph
@@ -91,13 +28,13 @@
       <ng-template #selectSecond> Select the target node </ng-template>
     </div>
   </div>
-  
+
   <br />
   <button (click)="clearGraph()">Clear graph</button>
   <button (click)="getResult()">Calculate Transfer Function</button>
 </div>
 
 
-<div *ngIf = 'resultPage == true'>
+<ng-template #result>
   <app-result></app-result>
-</div>
+</ng-template>
