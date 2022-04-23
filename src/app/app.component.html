@@ -1,60 +1,38 @@
-<!--<div *ngIf="resultPage == false; else result">-->
-<!--  <app-graph-->
-<!--    [branches]="branches"-->
-<!--    [nodes]="nodes"-->
-<!--    [zoomToFit$]="zoomToFit$"-->
-<!--    [selectedNodeId]="selectedNodeId"-->
-<!--    (onNodeClick)="onNodeClick($event)"-->
-<!--  ></app-graph>-->
-
-<!--  <button (click)="addNode()">Add Node</button>-->
-<!--  <br />-->
-
-<!--  <div id="branch">-->
-<!--    <h1>Add branch</h1>-->
-
-<!--    <label>Gain:</label>-->
-<!--    <input type="number" [(ngModel)]="gain" />-->
-
-<!--    <button (click)="addBranch()" [disabled]="branchBtnDisabled()">-->
-<!--      Select branch nodes-->
-<!--    </button>-->
-
-<!--    <div *ngIf="addingBranchIsActive">-->
-<!--      <div *ngIf="selectedNodeId == null; else selectSecond">-->
-<!--        Select the first node by clicking on it on the graph-->
-<!--      </div>-->
-<!--      <ng-template #selectSecond> Select the target node </ng-template>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <br />-->
-<!--  <button (click)="clearGraph()">Clear graph</button>-->
-<!--  <button (click)="getResult()">Calculate Transfer Function</button>-->
-<!--</div>-->
-
-
 <div class="d-flex flex-row" style="height: 100vh;">
   <div style="width:250px">
     <div class="modal-dialog h-100">
       <div class="modal-content" style="height: 100%">
-        <div class="modal-header" style="align-self: center; margin-bottom: 40px">
-          <h5 class="modal-title" style="font-size: 22px;font-weight:bold">SFG</h5>
+        <div class="modal-header" style="align-self: center">
+          <h5 class="modal-title" style="font-size: 22px;font-weight:bold">Signal Flow Graph</h5>
         </div>
-        <div class="modal-body" style="padding-top: 0px">
+
+        <div class="modal-body">
           <form>
-            <button type="button" class="btn btn-primary" style="background-color: black; margin-bottom: 15px" (click)="addNode()">Add node</button>
-            <div class="form-group row">
-              <div class="col-sm-10">
-                <p>Add new branch :</p>
-              </div>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary" style="background-color: black; margin-bottom: 15px" (click)="addNode()">Add node</button>
             </div>
-            <div class="form-group row">
+
+            <div class="mt-4 mb-4">
+              <div class="col-sm-10">
+                <h6>Add new branch:</h6>
+              </div>
               <div class="col-sm-10">
                 <input type="number" class="form-control" id="branch_gain" placeholder="Enter branch gain" [(ngModel)]="gain" [ngModelOptions]="{standalone: true}">
               </div>
+              <div class="mb-2 mt-0 p-2" *ngIf="addingBranchIsActive && !selectedNodeId">
+                Select first node
+              </div>
+              <div class="mb-2 mt-0 p-2" *ngIf="selectedNodeId">
+                Select second node
+              </div>
+              <button type="button" class="btn btn-primary" [disabled]="addingBranchIsActive==true || branchBtnDisabled()" style="background-color: black; margin-bottom: 15px" (click)="addBranch()">
+                Add branch
+              </button>
+              <button type="button" class="btn btn-outline-danger" [disabled]="addingBranchIsActive==false" style="margin-bottom: 15px" (click)="resetAddingBranch()">
+                cancel
+              </button>
             </div>
-            <button type="button" class="btn btn-primary" style="background-color: black; margin-bottom: 15px" (click)="addBranch()">Add branch</button>
+
             <div class="form-group row">
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="input_node" placeholder="Set R(S) node" [(ngModel)]="inputNode" [ngModelOptions]="{standalone: true}">
@@ -66,12 +44,14 @@
               </div>
             </div>
             <button type="button" class="btn btn-primary" style="background-color: black; margin-bottom: 220px">Solve</button>
+
           </form>
         </div>
       </div>
     </div>
   </div>
-  <div style="width: 83%">
+
+  <div class="graph">
     <app-graph
       [branches]="branches"
       [nodes]="nodes"

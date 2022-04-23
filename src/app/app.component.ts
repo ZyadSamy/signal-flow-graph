@@ -34,8 +34,12 @@ export class AppComponent {
   }
 
   addBranch() {
-      // toggle
-      this.addingBranchIsActive = !this.addingBranchIsActive;
+      this.addingBranchIsActive = true;
+  }
+
+  resetAddingBranch() {
+    this.addingBranchIsActive = false;
+    this.selectedNodeId = null;
   }
 
   branchBtnDisabled() : boolean {
