@@ -15,6 +15,8 @@ export class AppComponent {
 
   addingBranchIsActive: boolean = false;
   gain: number = null;
+  inputNode: number = null
+  outputNode: number = null
   selectedNodeId = null;
 
   // this is used only to adjust the graph fitment
@@ -67,7 +69,7 @@ export class AppComponent {
   getResult(){
       this.resultPage = true;
   }
-  
+
   clearGraph() {
     this.nodes = [];
     this.branches = [];
