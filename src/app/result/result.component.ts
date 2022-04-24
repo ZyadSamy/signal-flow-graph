@@ -9,6 +9,9 @@ export class ResultComponent implements OnInit {
 
   constructor() { }
 
+  totalDelta = "312"
+  overallTransferFunction = "1200"
+
   forwardPaths = [
     {
       path: "1-2-3-4",
@@ -60,6 +63,16 @@ export class ResultComponent implements OnInit {
       {
         paths: "1-2-1, 2-3-2, 3-4-3",
         gain: "315"
+      },
+      {
+        paths: "2-3-2, 3-4-3, 1-2-3-1",
+        gain: "125"
+      }
+    ],
+    [
+      {
+        paths: "1-2-1, 2-3-2, 3-4-3, 1-2-3-1",
+        gain: "341"
       }
     ]
    
@@ -67,5 +80,10 @@ export class ResultComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  refresh(){
+    window.location.reload()
+  }
+  
 
 }

@@ -1,18 +1,49 @@
 #page{
-    background: linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%);
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    top: 0;
+    background-color: rgb(236, 238, 232);
     font-family: montserrat,sans-serif;
-    font-weight: 400;
+    font-weight: 200;
     font-style: normal;
-    color:palegoldenrod;
+    color: black;
+    overflow: scroll;
 }
 
 #heading{
     text-align: center;
+    padding-top: 10px;
     -webkit-text-stroke: 0.7px black
     
 }
+
+caption{
+    font-size: larger;
+    font-weight: 500;
+    font-family: montserrat,sans-serif;
+    font-style: bold;
+}
+
+#tables{
+    left: 25px;
+    position: relative;
+    width: 90%;
+}
+
+table {
+    border: 2.5px solid;
+    width: 35%;
+    caption-side: top
+
+  }
+
+  th,td{
+    border: 1px solid;
+    text-align: center;
+    vertical-align: center;
+  }
+
+  #results{
+      display: flex;
+      justify-content: space-around;
+      position: relative;
+      padding-top: 20px;
+      padding-bottom: 20px;
+  }

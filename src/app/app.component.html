@@ -1,4 +1,4 @@
-<div class="d-flex flex-row" style="height: 100vh;">
+<div *ngIf="resultPage==false; else result" class="d-flex flex-row" style="height: 100vh;">
   <div style="width:250px">
     <div class="modal-dialog h-100">
       <div class="modal-content" style="height: 100%">
@@ -43,7 +43,7 @@
                 <input type="text" class="form-control" id="output_node" placeholder="Set C(S) node" [(ngModel)]="outputNode" [ngModelOptions]="{standalone: true}">
               </div>
             </div>
-            <button type="button" class="btn btn-primary" style="background-color: black; margin-bottom: 220px">Solve</button>
+            <button type="button" class="btn btn-primary" style="background-color: black; margin-bottom: 220px" (click)="getResult()">Solve</button>
 
           </form>
         </div>
@@ -63,6 +63,6 @@
 </div>
 
 
-<!--<ng-template #result>-->
-<!--  <app-result></app-result>-->
-<!--</ng-template>-->
+<ng-template #result>
+ <app-result></app-result>
+</ng-template>

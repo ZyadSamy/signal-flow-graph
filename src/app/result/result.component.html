@@ -1,34 +1,43 @@
 <div id = 'page'> 
     <h1 id = 'heading'>Your Result</h1>
-    <div>
-        <table id="forwardPaths">
-            <caption>Forward Paths</caption>
-            <tr>
-                <td>Path</td>
-                <td>Gain</td>
-                <td>Delta</td>
-            </tr>
-            <tr *ngFor = 'let x of forwardPaths'>
-                <td>{{x.path}}</td>
-                <td>{{x.gain}}</td>
-                <td>{{x.delta}}</td>
-            </tr>
-        </table>
+    <div id = 'tables'>
+        <div>
+            <table id="forwardPaths">
+                <caption>Forward Paths</caption>
+                <tr>
+                    <th>Path</th>
+                    <th>Gain</th>
+                    <th>Delta</th>
+                </tr>
+                <tr *ngFor = 'let x of forwardPaths'>
+                    <td>{{x.path}}</td>
+                    <td>{{x.gain}}</td>
+                    <td>{{x.delta}}</td>
+                </tr>
+            </table>
+        </div>
+    
+        <div>
+            <table *ngFor = 'let x of loops'>
+                <caption>{{loops.indexOf(x) + 1}} non-touching Loops</caption>
+                <tr>
+                    <th>Paths</th>
+                    <th>Gain</th>
+                </tr>
+                <tr *ngFor = 'let y of x'>
+                    <td>{{y.paths}}</td>
+                    <td>{{y.gain}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
-    <div>
-        <table *ngFor = 'let x of loops'>
-            <caption>{{loops.indexOf(x) + 1}} non-touching Loops</caption>
-            <tr>
-                <td>Paths</td>
-                <td>Gain</td>
-            </tr>
-            <tr *ngFor = 'let y of x'>
-                <td>{{y.paths}}</td>
-                <td>{{y.gain}}</td>
-            </tr>
-        </table>
+    <div id = 'results'>
+        <h2>Total Delta: {{totalDelta}}</h2>
+        <h2>Overall Transfer Function: {{overallTransferFunction}}</h2>
+        <button type="button" class="btn btn-success btn-rounded" (click)="refresh()">Start Again</button>
     </div>
+    
     
 </div>
 
