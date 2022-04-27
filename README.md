@@ -12,6 +12,12 @@ Given nodes and branches of a signal flow graph, The program does the following 
 
 
 ---
+# How to run
+**. –Front End**
+
+
+
+---
 # How to use
 
 ![gif](samplerun.gif)
