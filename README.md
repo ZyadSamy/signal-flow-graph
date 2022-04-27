@@ -15,15 +15,15 @@ Given nodes and branches of a signal flow graph, The program does the following 
 ---
 ## How to run
 ### Front End
-  + First clone repository `git clone https://github.com/ZyadSamy/signal-flow-graph.git` 
+  + Clone repository `git clone https://github.com/ZyadSamy/signal-flow-graph.git` 
   + Move to directory `cd signal-flow-graph`
   + Install dependencies using terminal `npm install --legacy-peer-deps` 
   + Run Angular Project using terminal `ng serve -o`
 
 ### Back End
-+
-
-
+  + Import project as maven project and solve dependencies and run it using a Java IDE
+  + Move to back end directory `cd backend`
+  + Install maven dependencies `mvn install`
 
 ---
 ## How to use
