@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
+import { GraphService } from './graph.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,8 @@ import { Subject } from 'rxjs';
 })
 export class AppComponent {
 
+  constructor(private graphService: GraphService) {}
+
   resultPage = false;
 
   branches = [];
@@ -15,8 +18,8 @@ export class AppComponent {
 
   addingBranchIsActive: boolean = false;
   gain: number = null;
-  inputNode: number = null
-  outputNode: number = null
+  inputNode: string = null
+  outputNode: string = null
   selectedNodeId = null;
 
   // this is used only to adjust the graph fitment
@@ -29,6 +32,7 @@ export class AppComponent {
       label: `${n}`,
     });
     this.nodes = [...this.nodes];
+    this.graphService.addNode(n);
     // adjust graph zoom to fit all nodes after adding the new one
     this.zoomToFit$.next(true)
   }
@@ -59,6 +63,7 @@ export class AppComponent {
           label: this.gain,
           target: node.id,
         });
+        this.graphService.addEdge(this.selectedNodeId, node.id, this.gain)
         // this is needed to trigger the graph update
         this.branches = [...this.branches];
         // reset
@@ -70,9 +75,21 @@ export class AppComponent {
     }
   }
 
+  totalDelta;
+  overallTransferFunction;
+  forwardPaths;
+  loops;
+  
   getResult(){
-      this.resultPage = true;
+    this.graphService.sendAdjacencyList(this.inputNode, this.outputNode).subscribe(response => {
+      this.graphService.getPaths().subscribe( paths => this.forwardPaths = paths )
+      this.graphService.getTransferFunction().subscribe( tf => this.overallTransferFunction = tf)
+      this.graphService.getOverallDelta().subscribe(d =>this.totalDelta = d)
+      this.graphService.getLoops().subscribe( loops => this.loops = loops)
+    });
+    this.resultPage = true;
   }
+
 
   clearGraph() {
     this.nodes = [];

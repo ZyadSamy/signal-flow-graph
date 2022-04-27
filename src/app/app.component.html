@@ -44,7 +44,7 @@
               </div>
             </div>
             <button type="button" class="btn btn-primary" style="background-color: black; margin-bottom: 220px" (click)="getResult()">Solve</button>
-
+      
           </form>
         </div>
       </div>
@@ -62,7 +62,11 @@
   </div>
 </div>
 
-
-<ng-template #result>
- <app-result></app-result>
+<ng-template #result >
+  <app-result 
+    [d]="totalDelta" 
+    [l]="loops" 
+    [fp]="forwardPaths" 
+    [tf]="overallTransferFunction">
+  </app-result>
 </ng-template>
