@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-graph',
+  selector: 'graph',
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss']
 })

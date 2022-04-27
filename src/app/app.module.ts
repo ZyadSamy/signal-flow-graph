@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ResultComponent } from './result/result.component';
+import { ResultComponent } from './Components/result/result.component';
 import { FormsModule } from '@angular/forms';
-import { GraphComponent } from './graph/graph.component';
+import { GraphComponent } from './Components/graph/graph.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -22,12 +22,14 @@ import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SidebarComponent } from './Components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ResultComponent,
-    GraphComponent
+    GraphComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

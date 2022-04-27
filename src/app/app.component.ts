@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
-import { GraphService } from './graph.service';
+import { GraphService } from './Services/graph.service';
 
 @Component({
   selector: 'app-root',
@@ -8,22 +8,17 @@ import { GraphService } from './graph.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
   constructor(private graphService: GraphService) {}
-
-  resultPage = false;
 
   branches = [];
   nodes = [];
-
+  // this is needed for adding a branch
   addingBranchIsActive: boolean = false;
-  gain: number = null;
-  inputNode: string = null
-  outputNode: string = null
   selectedNodeId = null;
-
   // this is used only to adjust the graph fitment
   zoomToFit$: Subject<boolean> = new Subject();
+  // this is used to load result component when solve button is pressed
+  resultPage = false;
 
   addNode() {
     const n = this.nodes.length + 1;
@@ -34,22 +29,11 @@ export class AppComponent {
     this.nodes = [...this.nodes];
     this.graphService.addNode(n);
     // adjust graph zoom to fit all nodes after adding the new one
-    this.zoomToFit$.next(true)
+    this.zoomToFit$.next(true);
   }
 
   addBranch() {
-      this.addingBranchIsActive = true;
-  }
-
-  resetAddingBranch() {
-    this.addingBranchIsActive = false;
-    this.selectedNodeId = null;
-  }
-
-  branchBtnDisabled() : boolean {
-    // this is used to evalue if the add branch button should be disabled or not
-    // possible bug where the user could press the button and then remove the gain
-    return this.gain == null
+    this.addingBranchIsActive = true;
   }
 
   onNodeClick(node) {
@@ -60,47 +44,35 @@ export class AppComponent {
         this.branches.push({
           id: `B${this.branches.length}`,
           source: this.selectedNodeId,
-          label: this.gain,
+          label: this.graphService.gain,
           target: node.id,
         });
-        this.graphService.addEdge(this.selectedNodeId, node.id, this.gain)
+        this.graphService.addEdge(this.selectedNodeId, node.id);
         // this is needed to trigger the graph update
         this.branches = [...this.branches];
         // reset
         this.addingBranchIsActive = false;
         this.selectedNodeId = null;
-      } else {
-        this.selectedNodeId = node.id;
-      }
+      } 
+      else {this.selectedNodeId = node.id;}
     }
   }
 
-  totalDelta;
-  overallTransferFunction;
-  forwardPaths;
-  loops;
-  nonTouchingLoops;
-  
-  getResult(){
-    this.graphService.sendAdjacencyList(this.inputNode, this.outputNode).subscribe(response => {
-      this.graphService.getPaths().subscribe( paths => this.forwardPaths = paths )
-      this.graphService.getTransferFunction().subscribe( tf => this.overallTransferFunction = tf)
-      this.graphService.getOverallDelta().subscribe(d => this.totalDelta = d)
-      this.graphService.getLoops().subscribe( loops => this.loops = loops)
-      this.graphService.getNonTouchingLoops().subscribe( n => {
-        this.nonTouchingLoops = n;
-        console.log(n)
-      })
-    });
-    this.resultPage = true;
-  }
-
-
-  clearGraph() {
-    this.nodes = [];
-    this.branches = [];
-    // reset this just in case
+  resetAddingBranch() {
     this.addingBranchIsActive = false;
     this.selectedNodeId = null;
   }
+
+  solve() {
+    // init results components
+    this.resultPage = true;
+  }
+
+  // clearGraph() {
+  //   this.nodes = [];
+  //   this.branches = [];
+  //   // reset this just in case
+  //   this.addingBranchIsActive = false;
+  //   this.selectedNodeId = null;
+  // }
 }

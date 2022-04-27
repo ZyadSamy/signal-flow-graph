@@ -9,10 +9,10 @@
                     <th>Gain</th>
                     <th>Delta</th>
                 </tr>
-                <tr *ngFor = 'let x of forwardPaths'>
-                    <td>{{x.path}}</td>
-                    <td>{{x.gain}}</td>
-                    <td>{{x.delta}}</td>
+                <tr *ngFor = 'let path of forwardPaths'>
+                    <td>{{path.path}}</td>
+                    <td>{{path.gain}}</td>
+                    <td>{{path.delta}}</td>
                 </tr>
             </table>
         </div>
@@ -25,14 +25,14 @@
                     <th>Paths</th>
                     <th>Gain</th>
                 </tr>
-                <tr *ngFor = 'let loop of loops'>
+                <tr *ngFor = 'let loop of feedbackLoops'>
                     <td>{{loop.loopNodes}}</td>
                     <td>{{loop.gain}}</td>
                 </tr>
             </table>
 
-            <table *ngFor = 'let x of nonTouchingLoops'>
-                <caption>{{loops.indexOf(x) + 2}} non-touching Loops</caption>
+            <table *ngFor = 'let x of nonTouchingLoops; let i=index'>
+                <caption>{{i + 2}} non-touching Loops</caption>
                 <tr>
                     <th>Paths</th>
                     <th>Gain</th>
@@ -49,9 +49,12 @@
     </div>
 
     <div id = 'results'>
-        <h2>Total Delta: {{totalDelta}}</h2>
+        <h2>Total Delta: {{overallDelta}}</h2> <br>
         <h2>Overall Transfer Function: {{overallTransferFunction}}</h2>
-        <button type="button" class="btn btn-success btn-rounded" (click)="refresh()">Start Again</button>
+        <button type="button" class="btn btn-success btn-rounded" (click)="refreshWindow()">Start Again</button>
+        <!-- TO BE REMOVED -->
+        <button type="button" class="btn btn-success btn-rounded" (click)="sendRequests()">Send Request Again</button>
+        <!--  -->
     </div>
     
     

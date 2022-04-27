@@ -1,73 +1,29 @@
-<div *ngIf="resultPage==false; else result" class="d-flex flex-row" style="height: 100vh;">
-  <div style="width:250px">
-    <div class="modal-dialog h-100">
-      <div class="modal-content" style="height: 100%">
-        <div class="modal-header" style="align-self: center">
-          <h5 class="modal-title" style="font-size: 22px;font-weight:bold">Signal Flow Graph</h5>
-        </div>
+<div *ngIf="resultPage==false; else result" 
+  class="d-flex flex-row" 
+  style="height: 100vh;">
 
-        <div class="modal-body">
-          <form>
-            <div class="text-center">
-              <button type="button" class="btn btn-primary" style="background-color: black; margin-bottom: 15px" (click)="addNode()">Add node</button>
-            </div>
+  <sidebar 
+    class="sidebar"
+    [addingBranchIsActive]="addingBranchIsActive"
+    [selectedNodeId]="selectedNodeId"
+    (onAddNodeClick)="addNode()"
+    (onAddBranchClick)="addBranch()"
+    (onCancel)="resetAddingBranch()"
+    (onSolveClick)="solve()">
+  </sidebar>
 
-            <div class="mt-4 mb-4">
-              <div class="col-sm-10">
-                <h6>Add new branch:</h6>
-              </div>
-              <div class="col-sm-10">
-                <input type="number" class="form-control" id="branch_gain" placeholder="Enter branch gain" [(ngModel)]="gain" [ngModelOptions]="{standalone: true}">
-              </div>
-              <div class="mb-2 mt-0 p-2" *ngIf="addingBranchIsActive && !selectedNodeId">
-                Select first node
-              </div>
-              <div class="mb-2 mt-0 p-2" *ngIf="selectedNodeId">
-                Select second node
-              </div>
-              <button type="button" class="btn btn-primary" [disabled]="addingBranchIsActive==true || branchBtnDisabled()" style="background-color: black; margin-bottom: 15px" (click)="addBranch()">
-                Add branch
-              </button>
-              <button type="button" class="btn btn-outline-danger" [disabled]="addingBranchIsActive==false" style="margin-bottom: 15px" (click)="resetAddingBranch()">
-                cancel
-              </button>
-            </div>
+  <graph
+    class="graph"
+    [branches]="branches"
+    [nodes]="nodes"
+    [zoomToFit$]="zoomToFit$"
+    [selectedNodeId]="selectedNodeId"
+    (onNodeClick)="onNodeClick($event)">
+  </graph>
 
-            <div class="form-group row">
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="input_node" placeholder="Set R(S) node" [(ngModel)]="inputNode" [ngModelOptions]="{standalone: true}">
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="output_node" placeholder="Set C(S) node" [(ngModel)]="outputNode" [ngModelOptions]="{standalone: true}">
-              </div>
-            </div>
-            <button type="button" class="btn btn-primary" style="background-color: black; margin-bottom: 220px" (click)="getResult()">Solve</button>
-      
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="graph">
-    <app-graph
-      [branches]="branches"
-      [nodes]="nodes"
-      [zoomToFit$]="zoomToFit$"
-      [selectedNodeId]="selectedNodeId"
-      (onNodeClick)="onNodeClick($event)"
-    ></app-graph>
-  </div>
 </div>
 
-<ng-template #result >
-  <app-result 
-    [d]="totalDelta" 
-    [fp]="forwardPaths" 
-    [tf]="overallTransferFunction"
-    [l]="loops" 
-    [ntl]="nonTouchingLoops">
-  </app-result>
+
+<ng-template #result>
+  <result></result>
 </ng-template>
