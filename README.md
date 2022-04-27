@@ -15,10 +15,10 @@ Given nodes and branches of a signal flow graph, The program does the following 
 ---
 ## How to run
 ### Front End
-> - First clone repository `git clone https://github.com/ZyadSamy/signal-flow-graph.git` 
-> - Move to directory `cd signal-flow-graph`
-> - Install dependencies using terminal `npm install --legacy-peer-deps` 
-> - Run Angular Project using terminal `ng serve -o`
+> + First clone repository `git clone https://github.com/ZyadSamy/signal-flow-graph.git` 
+> + Move to directory `cd signal-flow-graph`
+> + Install dependencies using terminal `npm install --legacy-peer-deps` 
+> + Run Angular Project using terminal `ng serve -o`
 
 ### Back End
 +
