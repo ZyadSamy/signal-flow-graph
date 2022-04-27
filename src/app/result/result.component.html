@@ -18,17 +18,31 @@
         </div>
     
         <div>
-            <table *ngFor = 'let x of loops'>
-                <caption>{{loops.indexOf(x) + 1}} non-touching Loops</caption>
+            
+            <table >
+                <caption>Loops</caption>
                 <tr>
                     <th>Paths</th>
                     <th>Gain</th>
                 </tr>
-                <tr *ngFor = 'let y of x'>
+                <tr *ngFor = 'let loop of loops'>
+                    <td>{{loop.loopNodes}}</td>
+                    <td>{{loop.gain}}</td>
+                </tr>
+            </table>
+
+            <table *ngFor = 'let x of nonTouchingLoops'>
+                <caption>{{loops.indexOf(x) + 2}} non-touching Loops</caption>
+                <tr>
+                    <th>Paths</th>
+                    <th>Gain</th>
+                </tr>
+                <tr *ngFor = 'let y of x.ntloops'>
                     <td>{{y.paths}}</td>
                     <td>{{y.gain}}</td>
                 </tr>
             </table>
+
         </div>
     </div>
 

@@ -14,6 +14,7 @@ export class ResultComponent implements OnInit {
   @Input('tf') overallTransferFunction;
   @Input('fp') forwardPaths;
   @Input('l') loops;
+  @Input('ntl') nonTouchingLoops;
 
   ngOnInit(): void {
   }

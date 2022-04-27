@@ -64,4 +64,8 @@ export class GraphService {
   getOverallDelta() {
     return this.http.get(`${this.backendUrl}/mason/overallDelta`)
   }
+
+  getNonTouchingLoops() {
+    return this.http.get(`${this.backendUrl}/mason/ntloops`)
+  }
 }

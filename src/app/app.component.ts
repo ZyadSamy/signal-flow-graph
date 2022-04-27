@@ -79,13 +79,18 @@ export class AppComponent {
   overallTransferFunction;
   forwardPaths;
   loops;
+  nonTouchingLoops;
   
   getResult(){
     this.graphService.sendAdjacencyList(this.inputNode, this.outputNode).subscribe(response => {
       this.graphService.getPaths().subscribe( paths => this.forwardPaths = paths )
       this.graphService.getTransferFunction().subscribe( tf => this.overallTransferFunction = tf)
-      this.graphService.getOverallDelta().subscribe(d =>this.totalDelta = d)
+      this.graphService.getOverallDelta().subscribe(d => this.totalDelta = d)
       this.graphService.getLoops().subscribe( loops => this.loops = loops)
+      this.graphService.getNonTouchingLoops().subscribe( n => {
+        this.nonTouchingLoops = n;
+        console.log(n)
+      })
     });
     this.resultPage = true;
   }
