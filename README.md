@@ -1,6 +1,6 @@
 # Signal Flow Graph Web App
 
-# Authors:
+## Authors:
 - Zyad Samy Ramadan
 - Basel Ahmed Awad
 - Abdelmoneim Hany Abdelmoneim
