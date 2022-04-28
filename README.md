@@ -1,5 +1,12 @@
 # Signal Flow Graph Web App
 
+# Authors:
+Zyad Samy Ramadan
+Basel Ahmed Awad
+Abdelmoneim Hany Abdelmoneim
+Ramy Ahmed El Sayed
+Youssef Ahmed Saeed Zaki
+
 ## Problem Statement
 Given nodes and branches of a signal flow graph, The program does the following :
 
